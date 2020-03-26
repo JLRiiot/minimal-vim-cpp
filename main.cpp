@@ -16,6 +16,7 @@ struct Journal {
 };
 
 int main() {
+	Journal journal{"Jose"};
 	cout << "CMake working 😃\n";
 	return 0;
 }
