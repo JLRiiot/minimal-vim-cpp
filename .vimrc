@@ -18,6 +18,9 @@ call plug#begin()
 	"   brew install bat 
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
+
+	Plug 'octol/vim-cpp-enhanced-highlight'
+	Plug 'preservim/nerdcommenter'
 call plug#end()
 
 let mapleader=","
@@ -25,12 +28,45 @@ let mapleader=","
 autocmd vimenter * NERDTree
 " this is for toggling NEERTree with "ctrl + n"
 map <C-n> :NERDTreeToggle<CR> 
+" This will locate the current buffer in NERDTree
+map <leader>r :NERDTreeFind<CR>
 
+filetype plugin on
+set hidden
+
+" close the current buffer and move to the previous one
+" this replicates the idea of closing a tab
+nnoremap <leader>bq :<c-u>bp <bar> bd #<CR>
+
+" Show all open buffers and their status
+nnoremap <leader>bl :ls<CR>
+
+" Close other buffers but this
+nnoremap <leader>bd :<c-u>up <bar> %bd <bar> e#<CR>
+
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 " key binding to search for a file with "ctrl + p"
 nnoremap <silent> <C-p> :Files<CR>
 " nnoremap <silent> <C-d> :Tags<CR>
-nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), { 'options': '--exact --select-1 --exit-0' })<CR>
+" nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {'options': ['--exact', '--select-1', '--exit-0', '--preview  ''' . preview_file . ' {}''']})<CR>
+nnoremap <silent> <leader>p :GitGutterLineHighlightsToggle<CR>
+let preview_file = '/Users/jose.montana/b1/b1-voice-public-contracts/absolut_path_preview.sh'
+"command! -bang -nargs=* Tags
+nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
+  \      'options': '
+	\					--exact
+	\					--select-1
+	\					--exit-0
+  \         --with-nth 1,2
+  \         --prompt "=> "
+  \         --preview-window="50%"
+  \         --preview ''' . preview_file . ' {}'''
+  \ })<CR>
 
+" clang-format integration, you need to install:
+"   https://github.com/rhysd/vim-clang-format
+nnoremap <silent> <leader>kf :ClangFormat<CR>
 " those are some prefered configs
 set tabstop=2
 set shiftwidth=2
@@ -48,3 +84,4 @@ colo atom-dark
 "   https://github.com/powerline/fonts
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set tags=tags
+set updatetime=100
