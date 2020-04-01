@@ -21,6 +21,8 @@ call plug#begin()
 
 	Plug 'octol/vim-cpp-enhanced-highlight'
 	Plug 'preservim/nerdcommenter'
+
+	Plug 'majutsushi/tagbar'
 call plug#end()
 
 let mapleader=","
@@ -33,16 +35,6 @@ map <leader>r :NERDTreeFind<CR>
 
 filetype plugin on
 set hidden
-
-" close the current buffer and move to the previous one
-" this replicates the idea of closing a tab
-nnoremap <leader>bq :<c-u>bp <bar> bd #<CR>
-
-" Show all open buffers and their status
-nnoremap <leader>bl :ls<CR>
-
-" Close other buffers but this
-nnoremap <leader>bd :<c-u>up <bar> %bd <bar> e#<CR>
 
 command! -bang -nargs=? -complete=dir Files
     \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
