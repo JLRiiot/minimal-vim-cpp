@@ -19,5 +19,5 @@ int main() {
 	Journal journal{"Jose"};
 	journal.title = "David";
 	cout << "CMake working 😃\n";
-	return 0;
+	return 0
 }

@@ -23,38 +23,93 @@ call plug#begin()
 	Plug 'preservim/nerdcommenter'
 
 	Plug 'majutsushi/tagbar'
+	Plug 'airblade/vim-gitgutter'
+	Plug 'jreybert/vimagit'
+	Plug 'tpope/vim-fugitive'
+	Plug 'tpope/vim-rhubarb'
 call plug#end()
 
+" This is the most important variable to set
+let $PROJECT_PATH = $HOME . '/Developer/cpppatterns/srp'
+let $MYVIMRC = $PROJECT_PATH . '/.vimrc'
+set splitright
+
 let mapleader=","
+
+" Edit my .vimrc file
+nnoremap <leader>ev :vsplit $MYVIMRC<CR>
+" Source my .vimrc file (this reloads the configuration)
+nnoremap <silent> <leader>sv :source $MYVIMRC<CR>
+" Close and save the current buffer
+nnoremap <leader>wq :wq<CR>
+" Save the curren buffer
+nnoremap <leader>w :w<CR>
+" Try to quit the current buffer
+nnoremap <leader>q :q<CR>
+
+" YouCompleteMe Configuration -------------------------------------------------
+" ['same-buffer', 'horizontal-split', 'vertical-split', 'new-tab', 'new-or-existing-tab']
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
 " this is for loading NERDTree always when you open vim
 autocmd vimenter * NERDTree
 " this is for toggling NEERTree with "ctrl + n"
 map <C-n> :NERDTreeToggle<CR> 
 " This will locate the current buffer in NERDTree
 map <leader>r :NERDTreeFind<CR>
+" Show and hide tagbar
+map <leader>f :TagbarToggle<CR>
 
 filetype plugin on
-set hidden
 
+" Git Gutter configuration ------------------------------------------
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '>'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '^'
+let g:gitgutter_sign_modified_removed = '<'
+let g:gitgutter_override_sign_column_highlight = 1
+
+nnoremap <silent> <leader>p :GitGutterLineHighlightsToggle<CR>
+nmap <leader>gn :GitGutterNextHunk<CR>
+nmap <leader>gp :GitGutterPrevHunk<CR>
+nmap <leader>ga :GitGutterStageHunk<CR>
+nmap <leader>gu :GitGutterUndoHunk<CR>
+
+" vimagit configuration ---------------------------------------------
+nnoremap <leader>gs :Magit<CR>
+
+" Fugitive configuration --------------------------------------------
+nnoremap <leader>gb :Gblame<CR>
+" Open current line in the browser
+nnoremap <leader>gbl :.Gbrowse<CR>
+" Open visual selection in the browser
+vnoremap <leader>gbs :Gbrowse<CR>
+
+" FZF Configuration -------------------------------------------------
+" 
 command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
+	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 " key binding to search for a file with "ctrl + p"
 nnoremap <silent> <C-p> :Files<CR>
 " nnoremap <silent> <C-d> :Tags<CR>
 " nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {'options': ['--exact', '--select-1', '--exit-0', '--preview  ''' . preview_file . ' {}''']})<CR>
-nnoremap <silent> <leader>p :GitGutterLineHighlightsToggle<CR>
-let preview_file = '/Users/jose.montana/b1/b1-voice-public-contracts/absolut_path_preview.sh'
-"command! -bang -nargs=* Tags
+
+" install gsed with homebrew: "brew install gnu-sed"
+let preview_file = $PROJECT_PATH . '/absolut_path_preview.sh'
 nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
-  \      'options': '
-	\					--exact
-	\					--select-1
-	\					--exit-0
-  \         --with-nth 1,2
-  \         --prompt "=> "
-  \         --preview-window="50%"
-  \         --preview ''' . preview_file . ' {}'''
-  \ })<CR>
+\      'options': '
+\					--exact
+\					--select-1
+\					--exit-0
+\         --with-nth 1,2
+\         --prompt "=> "
+\         --preview-window="50%"
+\         --preview ''' . preview_file . ' {}'''
+\ })<CR>
 
 " clang-format integration, you need to install:
 "   https://github.com/rhysd/vim-clang-format
@@ -77,3 +132,9 @@ colo atom-dark
 set guifont=Source\ Code\ Pro\ for\ Powerline:h14
 set tags=tags
 set updatetime=100
+
+" Edit my .vimrc file"
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Source my .vimrc file (This reloads the configuration)
+nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
