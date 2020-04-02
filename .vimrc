@@ -94,25 +94,32 @@ vnoremap <leader>gbs :Gbrowse<CR>
 
 " FZF Configuration -------------------------------------------------
 " 
+" [Tags] Command to generate tags file
+let g:fzf_tags_command = 'ctags_with_dep.sh'
 command! -bang -nargs=? -complete=dir Files
 	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 " key binding to search for a file with "ctrl + p"
 nnoremap <silent> <C-p> :Files<CR>
-" nnoremap <silent> <C-d> :Tags<CR>
-" nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {'options': ['--exact', '--select-1', '--exit-0', '--preview  ''' . preview_file . ' {}''']})<CR>
-
-" install gsed with homebrew: "brew install gnu-sed"
 let preview_file = $PROJECT_PATH . '/absolut_path_preview.sh'
-nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
-\      'options': '
-\					--exact
-\					--select-1
-\					--exit-0
-\         --with-nth 1,2
-\         --prompt "=> "
-\         --preview-window="50%"
-\         --preview ''' . preview_file . ' {}'''
-\ })<CR>
+nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), { 'options': '
+\	--exact 
+\	--select-1 
+\	--exit-0 
+\ --with-nth 1,2
+\ --prompt "=> "
+\	--preview ''' . preview_file . ' {} ''' 
+\})<CR>
+" install gsed with homebrew: "brew install gnu-sed"
+"nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
+"\      'options': '
+"\					--exact
+"\					--select-1
+"\					--exit-0
+"\         --with-nth 1,2
+"\         --prompt "=> "
+"\         --preview-window="50%"
+"\         --preview ''' . preview_file . ' {}'''
+"\ })<CR>
 
 " clang-format Configuration ----------------------------------------
 " map to <Leader>cf in C++ code
