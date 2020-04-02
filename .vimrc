@@ -27,6 +27,8 @@ call plug#begin()
 	Plug 'jreybert/vimagit'
 	Plug 'tpope/vim-fugitive'
 	Plug 'tpope/vim-rhubarb'
+	" Install clang-format using brew "brew install clang-format"
+	Plug 'rhysd/vim-clang-format'
 call plug#end()
 
 " This is the most important variable to set
@@ -66,6 +68,7 @@ map <leader>f :TagbarToggle<CR>
 filetype plugin on
 
 " Git Gutter configuration ------------------------------------------
+" This blog helped me alot on configuring git https://jakobgm.com/posts/vim/git-integration/
 let g:gitgutter_sign_added = '+'
 let g:gitgutter_sign_modified = '>'
 let g:gitgutter_sign_removed = '-'
@@ -111,9 +114,15 @@ nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
 \         --preview ''' . preview_file . ' {}'''
 \ })<CR>
 
-" clang-format integration, you need to install:
-"   https://github.com/rhysd/vim-clang-format
-nnoremap <silent> <leader>kf :ClangFormat<CR>
+" clang-format Configuration ----------------------------------------
+" map to <Leader>cf in C++ code
+autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
+" if you install vim-operator-user
+autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
+
 " those are some prefered configs
 set tabstop=2
 set shiftwidth=2
