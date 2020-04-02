@@ -32,7 +32,7 @@ call plug#begin()
 call plug#end()
 
 " This is the most important variable to set
-let $PROJECT_PATH = $HOME . '/Developer/cpppatterns/srp'
+let $PROJECT_PATH = $HOME . '/Developer/minimal-vim-cpp'
 let $MYVIMRC = $PROJECT_PATH . '/.vimrc'
 set splitright
 
@@ -136,6 +136,8 @@ set shiftwidth=2
 set softtabstop=2
 set textwidth=100
 set nu
+set colorcolumn=110
+highlight ColorColumn ctermbg=darkgray
 
 " what this is adding a better syntax highlighting for CMakeLists.txt file
 au BufNewFile,BufRead CMakeList.txt set filetype=cmake

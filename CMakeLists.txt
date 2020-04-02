@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 # set the project name
-project(single_responsibility_principle)
+project(solid_principles)
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
@@ -12,8 +12,10 @@ set(CMAKE_CXX_STANDARD 17)
 if(Boost_FOUND)
 	include_directories(${Boost_INCLUDE_DIRS})
 	# add the executable
-	add_executable(single_responsibility_principle main.cpp)
-	target_link_libraries(single_responsibility_principle ${Boost_LIBRARIES})
+	add_executable(srp main.cpp)
+	add_executable(ocp open_close.cpp)
+
+	target_link_libraries(srp ${Boost_LIBRARIES})
 elseif()
 	message("Boost not found")
 endif()
