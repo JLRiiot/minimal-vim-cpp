@@ -14,6 +14,8 @@ if(Boost_FOUND)
 	# add the executable
 	add_executable(srp main.cpp)
 	add_executable(ocp open_close.cpp)
+	add_executable(isp interface_segregation.cpp)
+	add_executable(fp fp.cpp)
 
 	target_link_libraries(srp ${Boost_LIBRARIES})
 elseif()

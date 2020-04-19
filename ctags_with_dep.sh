@@ -9,5 +9,5 @@
 for filename in *.cpp; do
 	[ -f "$filename" ] || break
 	gcc -M "$filename" | tr '\\ ' '\n' | sed -e '/^$/d' -e '/\.o:[ \t]*$/d' | \
-        ctags -L - --c++-kinds=+p --fields=+iaS --extra=+q
+        ctags -R --c++-kinds=+p --fields=+iaSn --extra=+q
 done

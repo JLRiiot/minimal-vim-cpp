@@ -32,7 +32,7 @@ call plug#begin()
 call plug#end()
 
 " This is the most important variable to set
-let $PROJECT_PATH = $HOME . '/Developer/minimal-vim-cpp'
+let $PROJECT_PATH = $HOME . '/Developer/cpppatterns/srp'
 let $MYVIMRC = $PROJECT_PATH . '/.vimrc'
 set splitright
 
@@ -92,39 +92,40 @@ nnoremap <leader>gbl :.Gbrowse<CR>
 " Open visual selection in the browser
 vnoremap <leader>gbs :Gbrowse<CR>
 
+
+" cpp-enhanced-highlight Configuration ------------------------------
+"
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
 " FZF Configuration -------------------------------------------------
 " 
 " [Tags] Command to generate tags file
-let g:fzf_tags_command = 'ctags_with_dep.sh'
+let g:fzf_tags_command = './ctags_with_dep.sh'
 command! -bang -nargs=? -complete=dir Files
 	\ call fzf#vim#files(<q-args>, fzf#vim#with_preview({'options': ['--layout=reverse', '--info=inline']}), <bang>0)
 " key binding to search for a file with "ctrl + p"
 nnoremap <silent> <C-p> :Files<CR>
-let preview_file = $PROJECT_PATH . '/absolut_path_preview.sh'
-nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), { 'options': '
-\	--exact 
-\	--select-1 
-\	--exit-0 
-\ --with-nth 1,2
-\ --prompt "=> "
-\	--preview ''' . preview_file . ' {} ''' 
-\})<CR>
 " install gsed with homebrew: "brew install gnu-sed"
-"nnoremap <leader>d :call fzf#vim#tags(expand('<cword>'), {
-"\      'options': '
-"\					--exact
-"\					--select-1
-"\					--exit-0
-"\         --with-nth 1,2
-"\         --prompt "=> "
-"\         --preview-window="50%"
-"\         --preview ''' . preview_file . ' {}'''
-"\ })<CR>
+let preview_file = $PROJECT_PATH . '/absolut_path_preview.sh'
+command! -bang -nargs=* Tags
+  \ call fzf#vim#tags(expand('<cword>'), {
+  \      'options': '
+  \         --with-nth 1,2
+  \         --prompt "=> "
+  \         --preview-window="60%"
+  \         --preview ''' . preview_file . ' {}'''
+  \ }, <bang>0)
+nnoremap <silent><leader>d :Tags <CR>
 
 " clang-format Configuration ----------------------------------------
 " map to <Leader>cf in C++ code
-autocmd FileType c,cpp,objc nnoremap <buffer><leader>cf :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><leader>cf :ClangFormat<CR>
+autocmd FileType c,cpp,objc nnoremap <buffer><leader>ff :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc vnoremap <buffer><leader>ff :ClangFormat<CR>
 " if you install vim-operator-user
 autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
@@ -144,10 +145,11 @@ au BufNewFile,BufRead CMakeList.txt set filetype=cmake
 
 " to get atom-dark color scheme you need to get and copy atom-dark.vim from:
 "   https://github.com/gosukiwi/vim-atom-dark
-colo atom-dark
+ colo atom-dark
+"colorscheme cyberpunkneon
 " to get fonts working you need to install prowerline fonts from:
 "   https://github.com/powerline/fonts
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+set guifont=PowerlineSymbols:h14
 set tags=tags
 set updatetime=100
 
@@ -156,3 +158,9 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 
 " Source my .vimrc file (This reloads the configuration)
 nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
+
+set cursorline
+hi cursorline cterm=none term=none
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+"highlight CursorLine guibg=#303000 ctermbg=234
