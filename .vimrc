@@ -29,6 +29,10 @@ call plug#begin()
 	Plug 'tpope/vim-rhubarb'
 	" Install clang-format using brew "brew install clang-format"
 	Plug 'rhysd/vim-clang-format'
+
+	Plug 'vim-airline/vim-airline'
+	Plug 'hzchirs/vim-material'
+
 call plug#end()
 
 " This is the most important variable to set
@@ -124,10 +128,10 @@ nnoremap <silent><leader>d :Tags <CR>
 
 " clang-format Configuration ----------------------------------------
 " map to <Leader>cf in C++ code
-autocmd FileType c,cpp,objc nnoremap <buffer><leader>ff :<C-u>ClangFormat<CR>
-autocmd FileType c,cpp,objc vnoremap <buffer><leader>ff :ClangFormat<CR>
+autocmd FileType c,cpp,objc,hpp nnoremap <buffer><leader>ff :<C-u>ClangFormat<CR>
+autocmd FileType c,cpp,objc,hpp vnoremap <buffer><leader>ff :ClangFormat<CR>
 " if you install vim-operator-user
-autocmd FileType c,cpp,objc map <buffer><leader>x <Plug>(operator-clang-format)
+autocmd FileType c,cpp,objc,hp,hppp map <buffer><leader>x <Plug>(operator-clang-format)
 " Toggle auto formatting:
 nmap <Leader>C :ClangFormatAutoToggle<CR>
 
@@ -164,3 +168,10 @@ hi cursorline cterm=none term=none
 autocmd WinEnter * setlocal cursorline
 autocmd WinLeave * setlocal nocursorline
 "highlight CursorLine guibg=#303000 ctermbg=234
+
+" Palenight
+"let g:material_style='palenight'
+let g:material_style='oceanic'
+set background=dark
+colorscheme vim-material
+
