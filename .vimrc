@@ -131,8 +131,8 @@ nnoremap <silent><leader>d :Tags <CR>
 autocmd FileType c,cpp,objc,hpp nnoremap <buffer><leader>ff :<C-u>ClangFormat<CR>
 autocmd FileType c,cpp,objc,hpp vnoremap <buffer><leader>ff :ClangFormat<CR>
 " if you install vim-operator-user
-autocmd FileType c,cpp,objc,hp,hppp map <buffer><leader>x <Plug>(operator-clang-format)
-" Toggle auto formatting:
+autocmd FileType c,cpp,objc,hpp map <buffer><leader>x <Plug>(operator-clang-format)
+" Toggle auto formatting
 nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " those are some prefered configs

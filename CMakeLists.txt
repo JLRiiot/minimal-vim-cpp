@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
+project(design-patterns)
 
-# set the project name
-project(srp)
 
 set(Boost_USE_STATIC_LIBS ON)
 set(Boost_USE_MULTITHREADED ON)
@@ -24,19 +23,24 @@ include_directories(${SOURCE_DIR}/include)
 add_library(termcolor INTERFACE IMPORTED)
 add_dependencies(termcolor termcolor_project)
 
+message(STATUS "Source dir:  ${SOURCE_DIR}")
+#if(Boost_FOUND)
+	#include_directories(${Boost_INCLUDE_DIRS})
+	## add the executable
+	#add_executable(${CMAKE_PROJECT_NAME} main.cpp)
+	#add_executable(${CMAKE_PROJECT_NAME} open_close.cpp)
+	#add_executable(${CMAKE_PROJECT_NAME} interface_segregation.cpp)
+	#add_executable(${CMAKE_PROJECT_NAME} fp.cpp)
+	#add_executable(${CMAKE_PROJECT_NAME} afp.cpp)
+	#add_executable(${CMAKE_PROJECT_NAME} prototype.cpp)
 
-if(Boost_FOUND)
-	include_directories(${Boost_INCLUDE_DIRS})
-	# add the executable
-	add_executable(srp main.cpp)
-	add_executable(ocp open_close.cpp)
-	add_executable(isp interface_segregation.cpp)
-	add_executable(fp fp.cpp)
-	add_executable(afp afp.cpp)
-	add_executable(prototype prototype.cpp)
+	#target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
+#elseif()
+	#message("Boost not found")
+#endif()
 
-	target_link_libraries(${CMAKE_PROJECT_NAME} ${Boost_LIBRARIES})
-	target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE termcolor)
-elseif()
-	message("Boost not found")
-endif()
+add_subdirectory(srp)
+add_subdirectory(pp)
+
+#target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE termcolor)
+

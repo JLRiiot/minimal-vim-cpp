@@ -1,6 +1,0 @@
-PointFactory            	fp.cpp	/^struct PointFactory {$/;"	s	file:	/Users/administrador/Developer/cpppatterns/srp/tags
-File name:  fp.cpp
-Line number:    file:
-Point                   	fp.cpp	/^  Point(float x, float y) : x(x), y(y) {}$/;"	f	line:11	class:Point	/Users/administrador/Developer/cpppatterns/srp/tags
-File name:  fp.cpp
-Line number:    11

@@ -23,4 +23,5 @@ struct IFax {
 
 struct IMultiFunctional : IPrinter, IScanner, IFax {};
 
-int main() {}
+int
+main( ) {}
